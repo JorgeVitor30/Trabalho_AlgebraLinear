@@ -235,7 +235,7 @@ def inversa4x4(matriz):
     x = np.array(transposta(matrizout1)) * float(1/det4x4(matriz))
     return printamatriz(x)
 
-def mudancadebase2x2(matriz,base1,base2):
+def mudancadebase2x2(base1,base2):
     a = [[base2[0][0],base2[1][0]],[base2[0][1],base2[1][1]]]
     b = base1[0]
 
@@ -254,104 +254,49 @@ def mudancadebase2x2(matriz,base1,base2):
     matriz = [[valor_x1,valor_x2],[valor_y1,valor_y2]]
     return printamatriz(matriz)
 
-def mudancadebase3x3(matriz,base1,base2):
+def mudancadebase3x3(base1,base2):
+    matriz = []
     a = [[base2[0][0],base2[1][0],base2[2][0]],[base2[0][1],base2[1][1],base2[2][1]],\
     [base2[0][2],base2[1][2],base2[2][2]]]
-    b = base1[0]
-
-    resultado = np.linalg.solve(a,b)
-    x1 = resultado[0]
-    y1 = resultado[1]
-    z1 = resultado[2]
-
-    a = [[base2[0][0],base2[1][0],base2[2][0]],[base2[0][1],base2[1][1],base2[2][1]],\
-        [base2[0][2],base2[1][2],base2[2][2]]]
-    b = base1[1]
-
-    resultado = np.linalg.solve(a,b)
-    x2 = resultado[0]
-    y2 = resultado[1]
-    z2 = resultado[2]
-
-    a = [[base2[0][0],base2[1][0],base2[2][0]],[base2[0][1],base2[1][1],base2[2][1]],\
-        [base2[0][2],base2[1][2],base2[2][2]]]
-    b = base1[2]
-
-    resultado = np.linalg.solve(a,b)
-    x3 = resultado[0]
-    y3 = resultado[1]
-    z3 = resultado[2]
-
-    matriz = [[x1,y1,z1],
-            [x2,y2,z2],
-            [x3,y3,z3]]
+    for x in range(3):
+        b = base1[x]
+        resultado1 = list(np.linalg.solve(a,b))
+        matriz.append(resultado1[:])
+        resultado1.clear()
     return printamatriz(matriz)
 
-def mudancadebase4x4(matriz,base1,base2):
+def mudancadebase4x4(base1,base2):
+    matriz = []
     a = [[base2[0][0],base2[1][0],base2[2][0],base2[3][0]],[base2[0][1],base2[1][1],base2[2][1],base2[3][1]],
     [base2[0][2],base2[1][2],base2[2][2],base2[3][2]],[base2[0][3],base2[1][3],base2[2][3],base2[3][3]]]
-    b = base1[0]
-
-    resultado = np.linalg.solve(a,b)
-    x1 = resultado[0]
-    y1 = resultado[1]
-    z1 = resultado[2]
-    w1 = resultado[3]
-
-    a = [[base2[0][0],base2[1][0],base2[2][0],base2[3][0]],[base2[0][1],base2[1][1],base2[2][1],base2[3][1]],
-    [base2[0][2],base2[1][2],base2[2][2],base2[3][2]],[base2[0][3],base2[1][3],base2[2][3],base2[3][3]]]
-    b = base1[1]
-
-    resultado = np.linalg.solve(a,b)
-    x2 = resultado[0]
-    y2 = resultado[1]
-    z2 = resultado[2]
-    w2 = resultado[3]
-
-    a = [[base2[0][0],base2[1][0],base2[2][0],base2[3][0]],[base2[0][1],base2[1][1],base2[2][1],base2[3][1]],
-    [base2[0][2],base2[1][2],base2[2][2],base2[3][2]],[base2[0][3],base2[1][3],base2[2][3],base2[3][3]]]
-    b = base1[2]
-
-    resultado = np.linalg.solve(a,b)
-    x3 = resultado[0]
-    y3 = resultado[1]
-    z3 = resultado[2]
-    w3 = resultado[3]
-    a = [[base2[0][0],base2[1][0],base2[2][0],base2[3][0]],[base2[0][1],base2[1][1],base2[2][1],base2[3][1]],
-    [base2[0][2],base2[1][2],base2[2][2],base2[3][2]],[base2[0][3],base2[1][3],base2[2][3],base2[3][3]]]
-    b = base1[3]
-
-    resultado = np.linalg.solve(a,b)
-    x4 = resultado[0]
-    y4 = resultado[1]
-    z4 = resultado[2]
-    w4 = resultado[3]
-
-    matriz = [[x1,y1,z1,w1],[x2,y2,z2,w2],[x3,y3,z3,w3],[x4,y4,z4,w4]]
-
+    for x in range(4):
+        b = base1[x]
+        resultado1 = list(np.linalg.solve(a,b))
+        matriz.append(resultado1[:])
+        resultado1.clear()
     return printamatriz(matriz)
 
-matriz = []
-dimensao = int(input('Qual a dimensão dessa matriz? '))
-str=''
-aux = []
-for x in range(0,dimensao):
-    print("Separe os numeros por virgula.")
-    print(f'Digite a linha {x+1}: ')
-    str = input()
-    #'1,2,3,4'
-    str_split = str.split(',')
-    #['1','2','3','4']
-    for i in str_split:
-        if i != ' ':
-            aux.append(int(i))
-            #[1,2,3,4]
-    matriz.append(aux[:])
-    #[[1,2,3,4]]
-    aux.clear()
 
 resp = input('1. Determintante e Inversa.\n2. Matriz de mudança de base\n=>')
 if resp == '1':
+    matriz = []
+    dimensao = int(input('Qual a dimensão dessa matriz? '))
+    str=''
+    aux = []
+    for x in range(0,dimensao):
+        print("Separe os numeros por virgula.")
+        print(f'Digite a linha {x+1}: ')
+        str = input()
+        #'1,2,3,4'
+        str_split = str.split(',')
+        #['1','2','3','4']
+        for i in str_split:
+            if i != ' ':
+                aux.append(int(i))
+                #[1,2,3,4]
+    matriz.append(aux[:])
+    #[[1,2,3,4]]
+    aux.clear()
     if dimensao == 2:
         print('-'*50)
         print("A matriz: ")
@@ -398,6 +343,8 @@ if resp == '1':
         print()
         print('-'*50)
 if resp == '2':
+    dimensao = int(input('Qual a dimensão das bases? '))
+    aux = []
     str=''
     base1 = []
     base2 = []
@@ -426,46 +373,37 @@ if resp == '2':
 
     if dimensao == 2:
         print('-'*50)
-        print("A matriz: ")
-        print()
-        printamatriz(matriz)
-        print()
         print("A base1: ")
         printamatriz(base1)
         print("A base2: ")
         printamatriz(base2)
+        print()
         print("A matriz de mudança de base: ")
         print()
-        mudancadebase2x2(matriz,base1,base2)
+        mudancadebase2x2(base1,base2)
         print()
         print('-'*50)
     if dimensao == 3:
         print('-'*50)
-        print("A matriz: ")
-        print()
-        printamatriz(matriz)
-        print()
         print("A base1: ")
         printamatriz(base1)
         print("A base2: ")
         printamatriz(base2)
+        print()
         print("A matriz de mudança de base: ")
         print()
-        mudancadebase3x3(matriz,base1,base2)
+        mudancadebase3x3(base1,base2)
         print()
         print('-'*50)
     if dimensao == 4:
         print('-'*50)
-        print("A matriz: ")
-        print()
-        printamatriz(matriz)
-        print()
         print("A base1: ")
         printamatriz(base1)
         print("A base2: ")
         printamatriz(base2)
+        print()
         print("A matriz de mudança de base: ")
         print()
-        mudancadebase4x4(matriz,base1,base2)
+        mudancadebase4x4(base1,base2)
         print()
         print('-'*50)
